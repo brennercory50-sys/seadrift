@@ -15,6 +15,10 @@ export type Bartender = {
 
 export const BARTENDERS: Bartender[] = [
   { id: "amber", name: "Amber", nights: "Nights · Mon–Thu & Sat" },
+  // Nights not confirmed yet — add `nights:` once we know who covers
+  // Friday and who covers Sunday.
+  { id: "lexi", name: "Lexi" },
+  { id: "trenti", name: "Trenti" },
 ];
 
 export function bartenderSubtitle(person: Bartender): string {
