@@ -527,3 +527,109 @@ footer a:hover {
     padding-bottom: 74px;
   }
 }
+
+/* ---------- Rockefeller's cross-link (sister venue) ---------- */
+/* Sea Drift's own palette only — this is a signpost, not a rebrand. */
+nav.main .nav-rock {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  padding: 0.42rem 0.8rem;
+  padding-bottom: 0.42rem;
+  border-bottom: 1px solid var(--line);
+  transition:
+    background 0.18s,
+    border-color 0.18s,
+    color 0.18s;
+}
+
+nav.main .nav-rock:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+#mnav .nav-rock {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.9rem 0.2rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+  color: var(--red);
+  border-bottom: none;
+}
+
+/* ---------- footer: our other spot ---------- */
+.fother {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+  margin-top: 2.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.fother .fother-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fother a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: color 0.15s;
+}
+
+.fother a:hover {
+  color: var(--red);
+}
+
+/* The copyright already draws its own top rule; avoid a double line. */
+.fother + .copy {
+  margin-top: 1.4rem;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* The Rockefeller's link makes the desktop nav a nine-item row, which
+   overflowed the viewport between where that nav appears (1081px) and
+   ~1200px. Tighten the gap in just that band; every wider screen keeps
+   the original 1.9rem spacing. */
+@media (min-width: 1081px) and (max-width: 1200px) {
+  nav.main {
+    gap: 1rem;
+  }
+}
+
+/* ".site-header .wrap" is a descendant selector, so it was also making
+   the mobile menu's inner wrap a flex row — the links laid out
+   horizontally and ran off screen (Gallery and Contact were
+   unreachable at 390px). "#mnav a { display: block }" shows a stacked
+   list was always the intent; this restores it. */
+#mnav .wrap {
+  display: block;
+}
