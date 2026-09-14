@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CartButton } from "./CartButton";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -99,9 +100,10 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <a className="btn btn-red btn-sm" href="tel:+13863339786">
-            Call To Order
-          </a>
+          <Link className="btn btn-red btn-sm" href="/menu">
+            Order Online
+          </Link>
+          <CartButton />
           <button
             className="burger"
             aria-expanded={menuOpen}

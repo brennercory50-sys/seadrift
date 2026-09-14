@@ -4,6 +4,8 @@ import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MobileDock } from "@/components/MobileDock";
+import { CartProvider } from "@/components/CartProvider";
+import { CartDrawer } from "@/components/CartDrawer";
 
 const barlow = Barlow({
   variable: "--font-barlow",
@@ -48,13 +50,16 @@ export default function RootLayout({
       className={`${barlow.variable} ${oswald.variable} ${permanentMarker.variable}`}
     >
       <body>
-        <a className="skip" href="#main">
-          Skip to main content
-        </a>
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <MobileDock />
+        <CartProvider>
+          <a className="skip" href="#main">
+            Skip to main content
+          </a>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+          <MobileDock />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );
