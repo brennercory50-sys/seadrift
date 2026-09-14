@@ -291,3 +291,18 @@
   color: var(--red);
   font-weight: 600;
 }
+
+/* ---------- size/variant badge on an order line ---------- */
+.variant {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.16rem 0.44rem;
+  vertical-align: middle;
+}

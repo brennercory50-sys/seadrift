@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
-import { formatPrice, getMenuItem } from "@/lib/menu";
+import { formatPrice } from "@/lib/menu";
+import { getCatalogEntry } from "@/lib/catalog";
 import styles from "./page.module.css";
 
 const PICKUP_TIMES = [
@@ -48,12 +49,17 @@ export function OrderClient() {
               </h2>
               <ul>
                 {lines.map((line) => {
-                  const item = getMenuItem(line.itemId);
+                  const item = getCatalogEntry(line.itemId);
                   if (!item) return null;
                   return (
-                    <li className={styles.line} key={line.itemId}>
+                    <li className={styles.line} key={line.lineId}>
                       <div className={styles.lineMain}>
-                        <h3>{item.name}</h3>
+                        <h3>
+                          {item.name}
+                          {line.variant && (
+                            <span className={styles.variant}>{line.variant}</span>
+                          )}
+                        </h3>
                         {line.note && (
                           <p className={styles.note}>{line.note}</p>
                         )}
@@ -66,7 +72,7 @@ export function OrderClient() {
                           <div className={styles.stepper}>
                             <button
                               type="button"
-                              onClick={() => setQty(line.itemId, line.qty - 1)}
+                              onClick={() => setQty(line.lineId, line.qty - 1)}
                               aria-label={`Decrease ${item.name} quantity`}
                             >
                               &minus;
@@ -74,7 +80,7 @@ export function OrderClient() {
                             <span>{line.qty}</span>
                             <button
                               type="button"
-                              onClick={() => setQty(line.itemId, line.qty + 1)}
+                              onClick={() => setQty(line.lineId, line.qty + 1)}
                               aria-label={`Increase ${item.name} quantity`}
                             >
                               +
@@ -83,7 +89,7 @@ export function OrderClient() {
                           <button
                             type="button"
                             className={styles.removeBtn}
-                            onClick={() => remove(line.itemId)}
+                            onClick={() => remove(line.lineId)}
                           >
                             Remove
                           </button>

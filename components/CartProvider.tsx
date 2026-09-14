@@ -8,15 +8,20 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
-import { getMenuItem, TAX_RATE } from "@/lib/menu";
+import { TAX_RATE } from "@/lib/menu";
+import { availableStock, getCatalogEntry, makeLineId } from "@/lib/catalog";
 
 export type CartLine = {
+  /** Unique per item + variant, so a shirt in M and L are separate lines. */
+  lineId: string;
   itemId: string;
+  variant?: string;
   qty: number;
   note: string;
 };
 
 const STORAGE_KEY = "seadrift-cart";
+const MAX_QTY = 99;
 
 /* ---------------------------------------------------------------
    The cart lives in a module-level store rather than component
@@ -32,6 +37,16 @@ let lines: CartLine[] = EMPTY;
 let hydrated = false;
 const listeners = new Set<() => void>();
 
+/** Upper bound for a line: merch is capped by stock on hand. */
+function qtyCeiling(itemId: string, variant?: string): number {
+  const stock = availableStock(itemId, variant);
+  return stock === null ? MAX_QTY : Math.min(stock, MAX_QTY);
+}
+
+function clampQty(qty: number, itemId: string, variant?: string): number {
+  return Math.max(0, Math.min(Math.floor(qty), qtyCeiling(itemId, variant)));
+}
+
 function readStoredLines(): CartLine[] {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -40,13 +55,19 @@ function readStoredLines(): CartLine[] {
     if (!Array.isArray(parsed)) return EMPTY;
     const restored = parsed.flatMap((entry): CartLine[] => {
       if (typeof entry !== "object" || entry === null) return [];
-      const { itemId, qty, note } = entry as Record<string, unknown>;
-      if (typeof itemId !== "string" || !getMenuItem(itemId)) return [];
-      if (typeof qty !== "number" || !Number.isFinite(qty) || qty < 1) return [];
+      const { itemId, variant, qty, note } = entry as Record<string, unknown>;
+      if (typeof itemId !== "string" || !getCatalogEntry(itemId)) return [];
+      if (typeof qty !== "number" || !Number.isFinite(qty)) return [];
+      const size = typeof variant === "string" ? variant : undefined;
+      // Stock may have changed since this cart was saved.
+      const clamped = clampQty(qty, itemId, size);
+      if (clamped < 1) return [];
       return [
         {
+          lineId: makeLineId(itemId, size),
           itemId,
-          qty: Math.min(Math.floor(qty), 99),
+          variant: size,
+          qty: clamped,
           note: typeof note === "string" ? note.slice(0, 140) : "",
         },
       ];
@@ -96,10 +117,11 @@ type CartContextValue = {
   taxCents: number;
   totalCents: number;
   drawerOpen: boolean;
-  add: (itemId: string) => void;
-  setQty: (itemId: string, qty: number) => void;
-  setNote: (itemId: string, note: string) => void;
-  remove: (itemId: string) => void;
+  qtyOf: (itemId: string, variant?: string) => number;
+  add: (itemId: string, variant?: string) => void;
+  setQty: (lineId: string, qty: number) => void;
+  setNote: (lineId: string, note: string) => void;
+  remove: (lineId: string) => void;
   clear: () => void;
   openDrawer: () => void;
   closeDrawer: () => void;
@@ -118,43 +140,48 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
-  const add = useCallback((itemId: string) => {
-    if (!getMenuItem(itemId)) return;
-    const existing = lines.find((line) => line.itemId === itemId);
+  const add = useCallback((itemId: string, variant?: string) => {
+    if (!getCatalogEntry(itemId)) return;
+    const ceiling = qtyCeiling(itemId, variant);
+    if (ceiling < 1) return;
+
+    const lineId = makeLineId(itemId, variant);
+    const existing = lines.find((line) => line.lineId === lineId);
     setLines(
       existing
         ? lines.map((line) =>
-            line.itemId === itemId
-              ? { ...line, qty: Math.min(line.qty + 1, 99) }
+            line.lineId === lineId
+              ? { ...line, qty: Math.min(line.qty + 1, ceiling) }
               : line
           )
-        : [...lines, { itemId, qty: 1, note: "" }]
+        : [...lines, { lineId, itemId, variant, qty: 1, note: "" }]
     );
     setDrawerOpen(true);
   }, []);
 
-  const setQty = useCallback((itemId: string, qty: number) => {
+  const setQty = useCallback((lineId: string, qty: number) => {
+    const target = lines.find((line) => line.lineId === lineId);
+    if (!target) return;
+    const next = clampQty(qty, target.itemId, target.variant);
     setLines(
-      qty < 1
-        ? lines.filter((line) => line.itemId !== itemId)
+      next < 1
+        ? lines.filter((line) => line.lineId !== lineId)
         : lines.map((line) =>
-            line.itemId === itemId
-              ? { ...line, qty: Math.min(Math.floor(qty), 99) }
-              : line
+            line.lineId === lineId ? { ...line, qty: next } : line
           )
     );
   }, []);
 
-  const setNote = useCallback((itemId: string, note: string) => {
+  const setNote = useCallback((lineId: string, note: string) => {
     setLines(
       lines.map((line) =>
-        line.itemId === itemId ? { ...line, note: note.slice(0, 140) } : line
+        line.lineId === lineId ? { ...line, note: note.slice(0, 140) } : line
       )
     );
   }, []);
 
-  const remove = useCallback((itemId: string) => {
-    setLines(lines.filter((line) => line.itemId !== itemId));
+  const remove = useCallback((lineId: string) => {
+    setLines(lines.filter((line) => line.lineId !== lineId));
   }, []);
 
   const clear = useCallback(() => setLines(EMPTY), []);
@@ -162,10 +189,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<CartContextValue>(() => {
     const count = currentLines.reduce((sum, line) => sum + line.qty, 0);
     const subtotalCents = currentLines.reduce((sum, line) => {
-      const item = getMenuItem(line.itemId);
-      return item ? sum + item.priceCents * line.qty : sum;
+      const entry = getCatalogEntry(line.itemId);
+      return entry ? sum + entry.priceCents * line.qty : sum;
     }, 0);
     const taxCents = Math.round(subtotalCents * TAX_RATE);
+    const qtyOf = (itemId: string, variant?: string) =>
+      currentLines.find((line) => line.lineId === makeLineId(itemId, variant))
+        ?.qty ?? 0;
+
     return {
       lines: currentLines,
       count,
@@ -173,6 +204,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       taxCents,
       totalCents: subtotalCents + taxCents,
       drawerOpen,
+      qtyOf,
       add,
       setQty,
       setNote,

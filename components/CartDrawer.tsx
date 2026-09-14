@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
-import { formatPrice, getMenuItem } from "@/lib/menu";
+import { formatPrice } from "@/lib/menu";
+import { getCatalogEntry } from "@/lib/catalog";
 import styles from "./cart.module.css";
 
 export function CartDrawer() {
@@ -82,12 +83,17 @@ export function CartDrawer() {
           <>
             <ul className={styles.lines}>
               {lines.map((line) => {
-                const item = getMenuItem(line.itemId);
+                const item = getCatalogEntry(line.itemId);
                 if (!item) return null;
                 return (
-                  <li className={styles.line} key={line.itemId}>
+                  <li className={styles.line} key={line.lineId}>
                     <div className={styles.lineTop}>
-                      <h3>{item.name}</h3>
+                      <h3>
+                        {item.name}
+                        {line.variant && (
+                          <span className={styles.variant}>{line.variant}</span>
+                        )}
+                      </h3>
                       <span className={styles.linePrice}>
                         {formatPrice(item.priceCents * line.qty)}
                       </span>
@@ -103,7 +109,7 @@ export function CartDrawer() {
                       <div className={styles.stepper}>
                         <button
                           type="button"
-                          onClick={() => setQty(line.itemId, line.qty - 1)}
+                          onClick={() => setQty(line.lineId, line.qty - 1)}
                           aria-label={`Decrease ${item.name} quantity`}
                         >
                           &minus;
@@ -111,7 +117,7 @@ export function CartDrawer() {
                         <span aria-live="polite">{line.qty}</span>
                         <button
                           type="button"
-                          onClick={() => setQty(line.itemId, line.qty + 1)}
+                          onClick={() => setQty(line.lineId, line.qty + 1)}
                           aria-label={`Increase ${item.name} quantity`}
                         >
                           +
@@ -120,7 +126,7 @@ export function CartDrawer() {
                       <button
                         type="button"
                         className={styles.removeBtn}
-                        onClick={() => remove(line.itemId)}
+                        onClick={() => remove(line.lineId)}
                       >
                         Remove
                       </button>
@@ -130,9 +136,13 @@ export function CartDrawer() {
                       className={styles.noteInput}
                       type="text"
                       value={line.note}
-                      placeholder="Add a note (flavor, temp, no onions…)"
+                      placeholder={
+                        item.kind === "merch"
+                          ? "Add a note (color, gift wrap…)"
+                          : "Add a note (flavor, temp, no onions…)"
+                      }
                       aria-label={`Notes for ${item.name}`}
-                      onChange={(event) => setNote(line.itemId, event.target.value)}
+                      onChange={(event) => setNote(line.lineId, event.target.value)}
                     />
                   </li>
                 );

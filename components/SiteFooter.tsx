@@ -24,6 +24,9 @@ export function SiteFooter() {
                 <Link href="/menu">Menu</Link>
               </li>
               <li>
+                <Link href="/shop">Merch</Link>
+              </li>
+              <li>
                 <Link href="/drinks">Drinks</Link>
               </li>
             </ul>
