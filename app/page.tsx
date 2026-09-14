@@ -520,7 +520,8 @@ export default function HomePage() {
               <div className={styles.kb}>
                 <h3>NFL Ticket</h3>
                 <p>
-                  With <strong>42 flat screens</strong> throughout the bar
+                  With <strong>42 flat screens</strong>{" "}
+                  throughout the bar
                   you&apos;ll never miss a moment of the action. Bring the
                   family or bring your friends — with multiple games on you
                   can hang out, eat and catch it all.
@@ -555,8 +556,8 @@ export default function HomePage() {
               <strong>the game, the music, or just to hang with friends</strong>{" "}
               — you&apos;re always welcome at Seadrift.
             </p>
-            <Link className="btn btn-red" href="/about">
-              About Us
+            <Link className="btn btn-red" href="/menu">
+              See The Menu
             </Link>
           </div>
           <div className={styles.hours}>
