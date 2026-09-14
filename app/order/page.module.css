@@ -1,0 +1,308 @@
+.page {
+  padding: clamp(2.4rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5rem);
+  min-height: 70vh;
+}
+
+.head {
+  margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.head h1 {
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+}
+
+.script {
+  display: block;
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--red);
+  text-transform: uppercase;
+  font-size: clamp(1.4rem, 3.2vw, 2.3rem);
+  transform: skewX(-6deg);
+  transform-origin: left;
+  margin-top: 0.2em;
+}
+
+.head p {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  max-width: 54ch;
+}
+
+/* ---------- empty ---------- */
+.empty {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  padding: clamp(2.2rem, 6vw, 3.6rem);
+  text-align: center;
+}
+
+.empty h2 {
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+}
+
+.empty p {
+  color: var(--muted);
+  margin: 0.8rem 0 1.6rem;
+}
+
+/* ---------- layout ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: clamp(1.5rem, 3vw, 2.6rem);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sectionTitle {
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 2px solid var(--red);
+}
+
+/* ---------- items ---------- */
+.items ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.4rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.lineMain h3 {
+  font-size: 1.02rem;
+  letter-spacing: 0.02em;
+}
+
+.note {
+  margin: 0.35rem 0 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.lineControls {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 0.8rem;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+}
+
+.stepper button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.stepper button:hover {
+  background: var(--red);
+}
+
+.stepper span {
+  min-width: 34px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.removeBtn:hover {
+  color: var(--red);
+}
+
+.linePrice {
+  flex: none;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: #fff;
+}
+
+/* ---------- checkout ---------- */
+.checkout {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  padding: clamp(1.3rem, 2.6vw, 1.8rem);
+  position: sticky;
+  top: 100px;
+}
+
+@media (max-width: 900px) {
+  .checkout {
+    position: static;
+  }
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+
+.form label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.form label span {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  padding: 0.6rem 0.75rem;
+  resize: vertical;
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  border-color: var(--red);
+  outline: none;
+}
+
+.totals {
+  margin: 0.4rem 0 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.totals dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.totals dd {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.grand dt,
+.grand dd {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line);
+}
+
+/* :global() — ".btn" is the shared global button class, not a scoped one. */
+.form :global(.btn) {
+  width: 100%;
+}
+
+.form :global(.btn):disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.form :global(.btn):disabled:hover {
+  background: var(--red);
+  transform: none;
+}
+
+.disclaimer {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.disclaimer a {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ---------- size/variant badge on an order line ---------- */
+.variant {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.16rem 0.44rem;
+  vertical-align: middle;
+}

@@ -1,0 +1,380 @@
+/* ---------- add to cart (menu rows) ---------- */
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  background: none;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.34rem 0.8rem;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.addBtn:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+.addBtn svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+
+/* ---------- header cart button ---------- */
+.cartBtn {
+  position: relative;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 1px solid var(--line);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    border-color 0.18s;
+}
+
+.cartBtn:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.cartBtn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.cartCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 0.3rem;
+  border-radius: 10px;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.7rem;
+  line-height: 20px;
+  text-align: center;
+}
+
+/* ---------- drawer ---------- */
+.drawerRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.drawerRoot[data-open] {
+  pointer-events: auto;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.62);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  cursor: pointer;
+}
+
+.drawerRoot[data-open] .scrim {
+  opacity: 1;
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 100%);
+  background: var(--ink-2);
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+}
+
+.drawerRoot[data-open] .panel {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .panel {
+    transition: none;
+  }
+}
+
+.panelHead {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.3rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.panelHead h2 {
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.headCount {
+  background: var(--red);
+  color: #fff;
+  font-size: 0.72rem;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 11px;
+  text-align: center;
+  padding: 0 0.35rem;
+}
+
+.closeBtn {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 1px solid var(--line);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.closeBtn:hover {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+/* ---------- empty state ---------- */
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.empty svg {
+  width: 44px;
+  height: 44px;
+  fill: rgba(255, 255, 255, 0.22);
+}
+
+.empty p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------- lines ---------- */
+.lines {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.line {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.lineTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.lineTop h3 {
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+}
+
+.linePrice {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+.variableNote {
+  margin: 0.3rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.lineControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.7rem;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+}
+
+.stepper button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.stepper button:hover {
+  background: var(--red);
+}
+
+.stepper span {
+  min-width: 32px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.removeBtn:hover {
+  color: var(--red);
+}
+
+.noteInput {
+  width: 100%;
+  margin-top: 0.7rem;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  padding: 0.5rem 0.7rem;
+}
+
+.noteInput::placeholder {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.noteInput:focus {
+  border-color: var(--red);
+  outline: none;
+}
+
+/* ---------- footer / totals ---------- */
+.panelFoot {
+  flex: none;
+  padding: 1.2rem 1.4rem calc(1.2rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--ink-3);
+}
+
+.totals {
+  margin: 0 0 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.totals dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.totals dd {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.grand dt,
+.grand dd {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+}
+
+/* :global() — ".btn" is the shared global button class, not a scoped one. */
+.panelFoot :global(.btn) {
+  width: 100%;
+}
+
+/* ---------- size/variant badge on a cart line ---------- */
+.variant {
+  display: inline-block;
+  margin-left: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.16rem 0.42rem;
+  vertical-align: middle;
+}
