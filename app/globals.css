@@ -216,6 +216,20 @@ img {
   padding: 1rem 0;
 }
 
+/* The logo is flex:none, so on phones the header row can only give way
+   at the gaps and the CTA. The cart button, the hamburger nav and the
+   bottom dock all already reach ordering, so the text CTA goes first —
+   without this the row overflows the viewport below ~430px. */
+@media (max-width: 560px) {
+  .site-header .wrap {
+    gap: 0.7rem;
+  }
+
+  .site-header .wrap > .btn {
+    display: none;
+  }
+}
+
 .logo {
   display: flex;
   flex-direction: column;
