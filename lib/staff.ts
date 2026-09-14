@@ -1,8 +1,7 @@
 /* ---------------------------------------------------------------
-   PLACEHOLDER CREW — replace with the bar's real staff.
-   These are invented first names and shifts so the banner has
-   something to scroll. Swap in the actual bartenders (and check
-   they're happy to be named on the site) before this goes live.
+   The crew shown in the "Behind The Bar" banner.
+   Add the rest of the bartenders here as they're confirmed — Friday
+   and Sunday nights aren't covered below yet.
 ---------------------------------------------------------------- */
 
 export type Bartender = {
@@ -15,13 +14,7 @@ export type Bartender = {
 };
 
 export const BARTENDERS: Bartender[] = [
-  { id: "jess", name: "Jess", role: "Bar Manager" },
-  { id: "mike", name: "Mike", nights: "Mon & Tue" },
-  { id: "ashley", name: "Ashley", nights: "Wed & Thu" },
-  { id: "danny", name: "Danny", nights: "Fri & Sat" },
-  { id: "carla", name: "Carla", nights: "Sundays" },
-  { id: "tj", name: "T.J.", nights: "Game Days" },
-  { id: "brooke", name: "Brooke", nights: "Karaoke Nights" },
+  { id: "amber", name: "Amber", nights: "Nights · Mon–Thu & Sat" },
 ];
 
 export function bartenderSubtitle(person: Bartender): string {
