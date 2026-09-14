@@ -724,3 +724,74 @@
     padding: 0.6rem 1rem;
   }
 }
+
+/* ---------- Rockefeller's cross-link (sister venue) ---------- */
+/* Sea Drift's own tokens only — this points somewhere else, it doesn't
+   bring that brand's look into this page. */
+.other {
+  background: var(--ink-2);
+  border-top: 1px solid var(--line);
+  padding: clamp(2.4rem, 5vw, 3.6rem) 0;
+}
+
+.otherInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  flex-wrap: wrap;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+/* Same red bar motif as the "good to know" boxes above. */
+.otherInner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 4px;
+  background: var(--red);
+}
+
+.otherCopy {
+  min-width: 0;
+}
+
+.otherTag {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.other h2 {
+  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+  letter-spacing: 0.03em;
+}
+
+.other p {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  max-width: 46ch;
+}
+
+.other :global(.btn) {
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .otherInner {
+    align-items: flex-start;
+  }
+
+  .other :global(.btn) {
+    width: 100%;
+  }
+}

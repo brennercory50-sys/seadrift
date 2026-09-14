@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CartButton } from "./CartButton";
+import { ROCKEFELLERS_URL } from "@/lib/links";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -100,6 +101,14 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <a
+              className="nav-rock"
+              href={ROCKEFELLERS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit Rockefeller&apos;s <span aria-hidden="true">&rarr;</span>
+            </a>
           </nav>
           <Link className="btn btn-red btn-sm" href="/menu">
             Order Online
@@ -122,6 +131,14 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <a
+              className="nav-rock"
+              href={ROCKEFELLERS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit Rockefeller&apos;s <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </div>
       </header>

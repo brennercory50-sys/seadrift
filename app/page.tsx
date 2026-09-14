@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { BartenderBanner } from "@/components/BartenderBanner";
+import { ROCKEFELLERS_URL } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -593,6 +594,29 @@ export default function HomePage() {
                 <dd>Open every day of the week</dd>
               </div>
             </dl>
+          </div>
+        </section>
+
+        <section className={styles.other} aria-labelledby="other-spot">
+          <div className="wrap">
+            <div className={styles.otherInner}>
+              <div className={styles.otherCopy}>
+                <span className={styles.otherTag}>Our Other Spot</span>
+                <h2 id="other-spot">Looking For Something Different?</h2>
+                <p>
+                  Switch it up tonight at Rockefeller&apos;s Modern Speakeasy.
+                </p>
+              </div>
+              <a
+                className="btn btn-red"
+                href={ROCKEFELLERS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Explore Rockefeller&apos;s
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </div>
         </section>
 

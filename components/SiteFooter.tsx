@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ROCKEFELLERS_URL } from "@/lib/links";
 
 export function SiteFooter() {
   return (
@@ -106,6 +107,17 @@ export function SiteFooter() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
+        </div>
+
+        <div className="fother">
+          <span className="fother-label">Our Other Spot</span>
+          <a
+            href={ROCKEFELLERS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Rockefeller&apos;s <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
 
         <p className="copy">
