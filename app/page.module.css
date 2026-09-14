@@ -18,6 +18,14 @@
   object-position: center 55%;
 }
 
+.heroVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  display: block;
+}
+
 .heroMedia::after {
   content: "";
   position: absolute;
@@ -38,10 +46,37 @@
     );
 }
 
-.hero .wrap {
+/* :global() is required here: CSS Modules scopes every class token in a
+   selector, but the JSX uses the shared, unscoped global ".wrap" class —
+   ".hero .wrap" would otherwise never match anything. */
+.hero :global(.wrap) {
   position: relative;
   z-index: 2;
   padding: 9rem 0 4rem;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 80vh;
+  }
+
+  .heroVideo,
+  .heroMedia img {
+    object-position: center 68%;
+  }
+
+  .heroMedia::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(13, 13, 13, 0.86) 0%,
+      rgba(13, 13, 13, 0.8) 50%,
+      rgba(13, 13, 13, 0.9) 100%
+    );
+  }
+
+  .hero :global(.wrap) {
+    padding: 7rem 0 3rem;
+  }
 }
 
 .hero h1 {
@@ -171,20 +206,20 @@
   padding: 2.4rem 0;
 }
 
-.strip .wrap {
+.strip :global(.wrap) {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
 }
 
 @media (max-width: 960px) {
-  .strip .wrap {
+  .strip :global(.wrap) {
     grid-template-columns: repeat(3, 1fr);
     row-gap: 2rem;
   }
 }
 
 @media (max-width: 560px) {
-  .strip .wrap {
+  .strip :global(.wrap) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -195,7 +230,7 @@
   border-right: 1px solid rgba(13, 13, 13, 0.14);
 }
 
-.strip .wrap .ic:last-child {
+.strip :global(.wrap) .ic:last-child {
   border-right: none;
 }
 
@@ -309,7 +344,7 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.tc .btn {
+.tc :global(.btn) {
   margin-top: 1rem;
 }
 
@@ -516,7 +551,7 @@
   font-weight: 600;
 }
 
-.kb .btn {
+.kb :global(.btn) {
   margin-top: 1.1rem;
 }
 
@@ -564,7 +599,7 @@
   color: var(--ink);
 }
 
-.aboutCopy .btn {
+.aboutCopy :global(.btn) {
   margin-top: 1.6rem;
 }
 

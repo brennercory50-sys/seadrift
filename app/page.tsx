@@ -258,13 +258,17 @@ export default function HomePage() {
       <main id="main">
         <section className={styles.hero}>
           <div className={styles.heroMedia}>
-            <Image
-              src="/seadrift-exterior.jpg"
-              alt="The SeaDrift Sports Bar and Grill storefront on A1A in Ormond by the Sea, with its beach mural, picnic tables and Food Drinks Pool Darts sign"
-              fill
-              priority
-              sizes="100vw"
-            />
+            <video
+              className={styles.heroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/seadrift-exterior.jpg"
+              aria-hidden="true"
+            >
+              <source src="/hero.mp4" type="video/mp4" />
+            </video>
           </div>
 
           <div className={styles.badge} aria-hidden="true">

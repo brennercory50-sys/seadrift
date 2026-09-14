@@ -20,7 +20,7 @@
   );
 }
 
-.phead .wrap {
+.phead :global(.wrap) {
   position: relative;
   z-index: 2;
   padding: clamp(3rem, 7vw, 5rem) 0;
@@ -53,7 +53,7 @@
   padding: 0.85rem 0;
 }
 
-.servedbar .wrap {
+.servedbar :global(.wrap) {
   display: flex;
   gap: 1.4rem;
   justify-content: center;
@@ -78,7 +78,7 @@
   z-index: 110;
 }
 
-.jump .wrap {
+.jump :global(.wrap) {
   display: flex;
   gap: 0.5rem;
   overflow-x: auto;
@@ -86,7 +86,7 @@
   scrollbar-width: none;
 }
 
-.jump .wrap::-webkit-scrollbar {
+.jump :global(.wrap)::-webkit-scrollbar {
   display: none;
 }
 
