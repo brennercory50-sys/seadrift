@@ -1,0 +1,193 @@
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--ink-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* ---------- fixed label ---------- */
+.label {
+  flex: none;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.1rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .label {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    padding: 0.9rem 0.7rem;
+  }
+
+  /* The viewport is only ~240px wide here — full-size edge fades and
+     separator gaps would leave almost no readable window. */
+  .viewport {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 1rem,
+      #000 calc(100% - 1rem),
+      transparent 100%
+    );
+  }
+
+  .sep {
+    margin: 0 0.9rem;
+  }
+
+  .toggle {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.4rem;
+  }
+}
+
+/* ---------- moving rail ---------- */
+.viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  /* Fade the entries in and out at the edges. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 3rem,
+    #000 calc(100% - 3rem),
+    transparent 100%
+  );
+}
+
+.rail {
+  display: flex;
+  width: max-content;
+  animation: scroll 38s linear infinite;
+}
+
+.rail[data-paused] {
+  animation-play-state: paused;
+}
+
+/* Pause while a keyboard user is tabbing through, and on hover. */
+.banner:hover .rail,
+.rail:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly one copy of the list — the second copy lands where the
+       first started, so the loop has no visible seam. */
+    transform: translateX(-50%);
+  }
+}
+
+/* Anyone who asks for reduced motion gets a static, scrollable strip. */
+@media (prefers-reduced-motion: reduce) {
+  .rail {
+    animation: none;
+  }
+
+  .viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .viewport::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- entries ---------- */
+.track {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.9rem 0;
+  white-space: nowrap;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.sub {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sep {
+  color: var(--red);
+  font-size: 0.52rem;
+  margin: 0 1.5rem;
+  transform: translateY(-0.15em);
+}
+
+/* ---------- pause control ---------- */
+.toggle {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  margin-right: 0.6rem;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.toggle:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.toggle svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
+/* The animation is already off, so the control has nothing to do. */
+@media (prefers-reduced-motion: reduce) {
+  .toggle {
+    display: none;
+  }
+}

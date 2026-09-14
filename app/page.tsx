@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { BartenderBanner } from "@/components/BartenderBanner";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -394,6 +395,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <BartenderBanner />
 
         <section
           className={styles.tiles}
