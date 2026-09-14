@@ -4,15 +4,40 @@ import { useState } from "react";
 import { BARTENDERS, bartenderSubtitle } from "@/lib/staff";
 import styles from "./bartenderBanner.module.css";
 
+/**
+ * A short crew list would leave the track narrower than the screen,
+ * which shows up as gaps in the loop. Repeat it until there's enough
+ * to span a wide viewport.
+ */
+const MIN_ENTRIES = 6;
+
 function Track({ ariaHidden }: { ariaHidden?: boolean }) {
+  const repeats = Math.max(1, Math.ceil(MIN_ENTRIES / BARTENDERS.length));
+  const entries = Array.from({ length: repeats }, (_, pass) =>
+    BARTENDERS.map((person) => ({ person, key: `${person.id}-${pass}` }))
+  ).flat();
+
   return (
     <ul className={styles.track} aria-hidden={ariaHidden || undefined}>
-      {BARTENDERS.map((person) => {
+      {entries.map(({ person, key }, index) => {
         const subtitle = bartenderSubtitle(person);
         return (
-          <li className={styles.entry} key={person.id}>
-            <span className={styles.name}>{person.name}</span>
-            {subtitle && <span className={styles.sub}>{subtitle}</span>}
+          <li className={styles.entry} key={key}>
+            {/* Only the first pass is real content for a screen reader. */}
+            <span
+              className={styles.name}
+              aria-hidden={index >= BARTENDERS.length || undefined}
+            >
+              {person.name}
+            </span>
+            {subtitle && (
+              <span
+                className={styles.sub}
+                aria-hidden={index >= BARTENDERS.length || undefined}
+              >
+                {subtitle}
+              </span>
+            )}
             <span className={styles.sep} aria-hidden="true">
               ◆
             </span>
